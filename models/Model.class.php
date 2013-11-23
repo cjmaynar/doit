@@ -5,11 +5,26 @@
  * Provides a wrapper for PDO queries.
  */
 abstract class Model {
+    /**
+     * Constructor: __construct
+     * Takes in the PDO instance and stores it for the Model
+     */
     public function __construct(PDO $DBH) {
         $this->db = $DBH;
         $this->model = strtolower(get_class($this)) . 's';
     }
 
+    /**
+     * Function: create
+     * Insert a new entry to the database
+     * 
+     * Parameters:
+     * attrs (Array) - A key value array of the information
+     * to be stored
+     *
+     * Returns:
+     * A key value array of the saved item, plus the unique id
+     */
     public function create(Array $attrs) {
         $sql = "INSERT INTO $this->model ";
         $sql .= '(' . implode(', ', array_keys($attrs)) . ') ';
@@ -28,7 +43,22 @@ abstract class Model {
         return $attrs;
     }
 
+    /**
+     * Function: update
+     * Modify an existing item in the database
+     *
+     * Parameters:
+     * attrs (Array) - A key value array of the properties
+     * to be modified. Requires a key named 'id'
+     *
+     * Returns:
+     * A key value array of the saved item, plus the unique id
+     */
     public function update(Array $attrs) {
+        if (!array_key_exists('id', $attrs)) {
+            throw new Exception("attrs must contain an id key");
+        }
+
         $id = $attrs['id'];
         unset($attrs['id']);
 
@@ -57,6 +87,7 @@ abstract class Model {
     }
 
     public function get($key, $value) {
+        throw new Exception("Deprecated");
         $sql = "SELECT * FROM $this->model ";
         $sql .= "WHERE $key=?";
         try {
@@ -68,6 +99,19 @@ abstract class Model {
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Function: filter
+     * Get multiple entries from the database that match
+     * a given set of parameters
+     *
+     * Parameters:
+     * params (Array) - A key value array used to lookup
+     * entries
+     *
+     * Returns:
+     * An array of the rows that matched the parameters
+     * in separate key value arrays
+     */
     public function filter(Array $params) {
         $sql = "SELECT * FROM $this->model WHERE ";
         foreach ($params as $key => $val) {
@@ -90,6 +134,16 @@ abstract class Model {
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    /**
+     * Function: delete
+     * Delete a row from the database
+     *
+     * Parameters:
+     * id (int) - The id of the row to be deleted
+     *
+     * Returns:
+     * An empty array
+     */
     public function delete($id) {
         $sql = "DELETE FROM $this->model WHERE id=?";
         try {
@@ -99,12 +153,6 @@ abstract class Model {
             return false;
         }
         return Array();
-    }
-
-    public function complete($id) {
-        $attrs['completed'] = date("Y-m-d H:i:s");
-        $attrs['id'] = $id;
-        return $this->update($attrs);
     }
 }
 ?>

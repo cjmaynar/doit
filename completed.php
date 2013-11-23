@@ -14,7 +14,7 @@ foreach ($Task->completed($_SESSION['userid']) as $task) {
     echo "<li>" . $task['task'] . "
     <p>Finished: " . date("m/d/y \a\\t g:i a", $task['completed']) . "</p></li>";
 }
+echo "</ul>";
+
+require_once 'footer.php';
 ?>
-</ul>
-</body>
-</html>

@@ -15,6 +15,12 @@ class Task extends Model
         return $attrs;
     }
 
+    public function complete($id) {
+        $attrs['completed'] = date("Y-m-d H:i:s");
+        $attrs['id'] = $id;
+        return $this->update($attrs);
+    }
+
     public function completed($id) {
         $sql = "SELECT * FROM $this->model WHERE user=? AND completed IS NOT NULL";
         try {

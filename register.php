@@ -27,29 +27,30 @@ if (array_key_exists('username', $_POST)) {
     }
 }
 ?>
-      <h1>DoIt</h1>
-      <p>You must create a user account on DoIt before you can begin creating tasks.</p>
+<h1>DoIt</h1>
+<p>You must create a user account on DoIt before you can begin creating tasks.</p>
 
-      <form action="" method="post">
-        <fieldset>
-            <legend>Fill in the form below to create an account</legend>
-              <?php
-              if (isset($errorMsg)) {
-                  echo "<p><strong>Error: $errorMsg</strong></p>";
-              }
-              ?>
-            <div class="form-group">
-            <label for="user">Username:</label>
-            <input type="text" name="username" id="user" placeholder="Username" />
-            </div>
+<form action="" method="post">
+<fieldset>
+    <legend>Fill in the form below to create an account</legend>
+      <?php
+      if (isset($errorMsg)) {
+          echo "<p><strong>Error: $errorMsg</strong></p>";
+      }
+      ?>
+    <div class="form-group">
+    <label for="user">Username:</label>
+    <input type="text" name="username" id="user" placeholder="Username" />
+    </div>
 
-            <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" placeholder="Password" />
-            </div>
+    <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" placeholder="Password" />
+    </div>
 
-            <p><input type="submit" class="btn btn-primary" value="Register" /></p>
-        </fieldset>
-     </form>
-  </body>
-</html>
+    <p><input type="submit" class="btn btn-primary" value="Register" /></p>
+</fieldset>
+</form>
+<?php
+require_once 'footer.php';
+?>
