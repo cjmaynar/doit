@@ -15,5 +15,16 @@ class Task extends Model
         return $attrs;
     }
 
+    public function completed($id) {
+        $sql = "SELECT * FROM $this->model WHERE user=? AND completed IS NOT NULL";
+        try {
+            $sth = $this->db->prepare($sql);
+            $sth->execute(Array($id));
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
 ?>
