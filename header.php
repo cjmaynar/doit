@@ -1,3 +1,6 @@
+<?php
+require_once 'config.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,23 +33,27 @@
   </head>
 
   <body>
-
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container">
+          <a class="brand" href="./">DoIt</a>
+  <?php
+  if (array_key_exists('userid', $_SESSION)) {
+      ?>
           <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="./">DoIt</a>
           <div class="nav-collapse collapse">
             <ul class="nav">
-              <li class="active"><a href="./">Home</a></li>
               <li><a href="completed.php">Completed</a></li>
               <li><a href="logout.php">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->
+    <?php
+  }
+  ?>
         </div>
       </div>
     </div>

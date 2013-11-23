@@ -6,14 +6,15 @@ $Task = new Task($DBH);
 
 require_once 'header.php';
 ?>
-<h1>My Completed Tasks</h1>
+<h2>My Completed Tasks</h2>
+<p>A listing of all the things that you&rsquo;ve acomplished. Well Done.</p>
 <ul>
-    <?php
-    foreach ($Task->completed($_SESSION['userid']) as $task) {
-        echo "<li>" . $task['task'] . "</li>";
-    }
-    ?>
-
+<?php
+foreach ($Task->completed($_SESSION['userid']) as $task) {
+    echo "<li>" . $task['task'] . "
+    <p>Finished: " . date("m/d/y \a\\t g:i a", $task['completed']) . "</p></li>";
+}
+?>
 </ul>
 </body>
 </html>

@@ -1,14 +1,24 @@
 $().ready(function() {
    $('#add-form').hide();
    $('#due').datepicker();
+
+   //Show the form to create a new task
    $('#add-task').click(function(e) {
         e.preventDefault();
         $('#add-form').show();
         $('#add-task').toggle();
    });
 
+   //Perform an AJAX call to add the task to the DB, then
+   //write the DOM for it to the table.
    $('#new-task').submit(function(e) {
        e.preventDefault();
+
+       if ($("#task").val() == '' || $("#due").val() == '') {
+           alert("You must fill in the form to create a task");
+           return false;
+       }
+
        $('#add-form').hide();
        $('#add-task').toggle();
        $.post('ajax.php', $(this).serialize(), function(data) {
@@ -18,11 +28,10 @@ $().ready(function() {
        return false;
    });
 
+   //On edit click convert the text to inline editable fields
    $(document).on('click', '.edit-task', function(e) {
         e.preventDefault();
         var row = $(this).parent().parent();
-        var taskid = row.attr('id').split('-')[1];
-
         var task = row.find('.task-name');
         var due = row.find('.task-due');
 
@@ -38,26 +47,29 @@ $().ready(function() {
         row.find('.actions').append(' <a class="btn cancel-edit">Cancel</a>');
    });
 
+   //On cancel click restore the row to the original
    $(document).on('click', '.cancel-edit', function(e) {
         e.preventDefault();
         var row = $(this).parent().parent();
+        var task = row.find('.task-name input').attr('value');
+        var due = row.find('.task-due input').attr('value');
 
-        var task = $(row).find('.task-name input').attr('value');
-        var due = $(row).find('.task-due input').attr('value');
-        $(row).find('.task-name').html(task);
-        $(row).find('.task-due').html(due);
+        row.find('.task-name').html(task);
+        row.find('.task-due').html(due);
         row.find('.cancel-edit').remove();
         row.find('.save-task').remove();
         row.find('.edit-task').toggle();
         row.find('.complete-task').toggle();
    });
 
+   //On save send an AJAX call out to update the task with
+   //the new information
    $(document).on('click', '.save-task', function(e) {
         e.preventDefault();
         var row = $(this).parent().parent();
         var taskid = row.attr('id').split('-')[1];
-        var task = $(row).find('.task-name input').val();
-        var due = $(row).find('.task-due input').val();
+        var task = row.find('.task-name input').val();
+        var due = row.find('.task-due input').val();
         var data = {
             'action': 'edit',
             'task': task,
@@ -65,8 +77,8 @@ $().ready(function() {
             'id': taskid
         }
         $.post('ajax.php', data, function(data) {
-            $(row).find('.task-name').html(task);
-            $(row).find('.task-due').html(due);
+            row.find('.task-name').html(task);
+            row.find('.task-due').html(due);
             row.find('.cancel-edit').remove();
             row.find('.save-task').remove();
             row.find('.edit-task').toggle();
@@ -74,6 +86,8 @@ $().ready(function() {
         });
    });
 
+   //On delete perform an AJAX call to remove the task,
+   //and then remove the DOM
    $(document).on('click', '.del-task', function(e) {
         e.preventDefault();
         var taskid = $(this).parent().parent().attr('id').split('-')[1];
@@ -87,6 +101,8 @@ $().ready(function() {
         });
    });
 
+   //On complete make a AJAX call to complete the task,
+   //and then remove the DOM
    $(document).on('click', '.complete-task', function(e) {
        e.preventDefault();
        var taskid = $(this).parent().parent().attr('id').split('-')[1];
