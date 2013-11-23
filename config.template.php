@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 $host = '';
 $dbname = '';
 $user = '';

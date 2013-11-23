@@ -11,12 +11,6 @@ abstract class Model {
     }
 
     public function create(Array $attrs) {
-        $attrs['user'] = 1;
-        $attrs['created'] = date("Y-m-d H:i:s");
-        $slashDue = $attrs['due'];
-        $due = explode('/', $attrs['due']);
-        $attrs['due'] = $due[2] . '-' . $due[0] . '-' . $due[1];
-
         $sql = "INSERT INTO $this->model ";
         $sql .= '(' . implode(', ', array_keys($attrs)) . ') ';
         $sql .= 'VALUES (' . implode(',', array_fill(0, count($attrs), '?')) . ')';
@@ -30,7 +24,6 @@ abstract class Model {
         }
 
         $attrs['id'] = $this->db->lastInsertId();
-        $attrs['due'] = $slashDue;
 
         return $attrs;
     }
@@ -39,8 +32,10 @@ abstract class Model {
         $id = $attrs['id'];
         unset($attrs['id']);
 
-        $due = explode('/', $attrs['due']);
-        $attrs['due'] = $due[2] . '-' . $due[0] . '-' . $due[1];
+        if (array_key_exists('due', $attrs)) {
+            $due = explode('/', $attrs['due']);
+            $attrs['due'] = $due[2] . '-' . $due[0] . '-' . $due[1];
+        }
 
         $sql = "UPDATE $this->model SET ";
         foreach ($attrs as $key => $val) {

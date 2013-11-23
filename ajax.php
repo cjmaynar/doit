@@ -9,6 +9,7 @@ $Task = new Task($DBH);
 
 switch ($action) {
     case 'create':
+        $_POST['user'] = $_SESSION['userid'];
         $result = $Task->create($_POST);
         break;
     case 'delete':
