@@ -17,7 +17,9 @@ switch ($action) {
     case 'edit':
         $result = $Task->update($_POST);
         break;
+    case 'complete':
+        $result = $Task->complete($_POST['id']);
+        break;
 }
-
 echo json_encode($result);
 ?>

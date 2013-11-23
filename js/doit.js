@@ -13,7 +13,7 @@ $().ready(function() {
        $('#add-task').toggle();
        $.post('ajax.php', $(this).serialize(), function(data) {
            var task = JSON.parse(data);
-           $("#tasks > tbody").append("<tr id='task-" + task['id'] + "'><td class='task-name'>" + task['task'] + "</td><td class='task-due'>" + task['due'] + "</td><td class='actions'><a class='btn edit-task'>Edit</a> <a class='btn del-task'>Delete</a></td></tr>");
+           $("#tasks > tbody").append("<tr id='task-" + task['id'] + "'><td class='task-name'>" + task['task'] + "</td><td class='task-due'>" + task['due'] + "</td><td class='actions'><a class='btn complete-task'>Complete</a> <a class='btn edit-task'>Edit</a> <a class='btn del-task'>Delete</a></td></tr>");
        });
        return false;
    });
@@ -33,6 +33,7 @@ $().ready(function() {
         due.html(dueElement);
 
         row.find('.edit-task').toggle();
+        row.find('.complete-task').toggle();
         row.find('.actions').prepend('<a class="btn save-task">Save</a>');
         row.find('.actions').append(' <a class="btn cancel-edit">Cancel</a>');
    });
@@ -48,6 +49,7 @@ $().ready(function() {
         row.find('.cancel-edit').remove();
         row.find('.save-task').remove();
         row.find('.edit-task').toggle();
+        row.find('.complete-task').toggle();
    });
 
    $(document).on('click', '.save-task', function(e) {
@@ -68,6 +70,7 @@ $().ready(function() {
             row.find('.cancel-edit').remove();
             row.find('.save-task').remove();
             row.find('.edit-task').toggle();
+            row.find('.complete-task').toggle();
         });
    });
 
@@ -82,5 +85,18 @@ $().ready(function() {
             $('#task-' + taskid).hide();
             $('#task-' + taskid).remove();
         });
+   });
+
+   $(document).on('click', '.complete-task', function(e) {
+       e.preventDefault();
+       var taskid = $(this).parent().parent().attr('id').split('-')[1];
+       var data = {
+           'action': 'complete',
+           'id': taskid
+       }
+       $.post('ajax.php', data, function(data) {
+           $('#task-' + taskid).hide();
+           $('#task-' + taskid).remove();
+       });
    });
 });

@@ -32,9 +32,9 @@ $tasks = $Task->get('user', 1);
     <!-- Fav and touch icons -->
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="bootstrap/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="bootstrap/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="bootstrap/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="bootstrap/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="bootstrap/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="bootstrap/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="bootstrap/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="bootstrap/ico/favicon.png">
   </head>
 
   <body>
@@ -76,7 +76,7 @@ $tasks = $Task->get('user', 1);
 
         $due = date('m/d/Y', strtotime($task['due']));
         echo "<tr id='task-" . $task['id'] . "'><td class='task-name'>" . $task['task'] . "</td><td class='task-due'>" . $due;
-        echo '<td class="actions"><a class="btn edit-task">Edit</a> <a class="btn del-task">Delete</a></td></tr>';
+        echo '<td class="actions"><a class="btn complete-task">Complete</a> <a class="btn edit-task">Edit</a> <a class="btn del-task">Delete</a></td></tr>';
       }
       ?>
       </table>

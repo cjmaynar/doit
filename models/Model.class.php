@@ -83,5 +83,11 @@ abstract class Model {
         }
         return Array();
     }
+
+    public function complete($id) {
+        $attrs['completed'] = date("Y-m-d H:i:s");
+        $attrs['id'] = $id;
+        return $this->update($attrs);
+    }
 }
 ?>
