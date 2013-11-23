@@ -12,13 +12,13 @@ abstract class Model {
 
     public function create(Array $attrs) {
         $attrs['user'] = 1;
+        $attrs['created'] = date("Y-m-d H:i:s");
+        $due = explode('/', $attrs['due']);
+        $attrs['due'] = $due[2] . '-' . $due[0] . '-' . $due[1];
 
         $sql = "INSERT INTO $this->model ";
         $sql .= '(' . implode(', ', array_keys($attrs)) . ') ';
         $sql .= 'VALUES (' . implode(',', array_fill(0, count($attrs), '?')) . ')';
-
-        error_log($sql);
-        error_log(print_r($attrs, true));
 
         try {
             $sth = $this->db->prepare($sql);
@@ -34,12 +34,16 @@ abstract class Model {
         $id = $attrs['id'];
         unset($attrs['id']);
 
+        $due = explode('/', $attrs['due']);
+        $attrs['due'] = $due[2] . '-' . $due[0] . '-' . $due[1];
+
         $sql = "UPDATE $this->model SET ";
         foreach ($attrs as $key => $val) {
-            $sql .= "$key = ? ";
+            $sql .= "$key=?, ";
         }
+        $sql = trim($sql, ', ');
+        $sql .= "WHERE id=?";
 
-        $sql .= "WHERE id = ?";
         $attrs['id'] = $id;
         try {
             $sth = $this->db->prepare($sql);
@@ -48,7 +52,6 @@ abstract class Model {
             error_log($e->getMessage());
             return false;
         }
-
     }
 
     public function get($key, $value) {

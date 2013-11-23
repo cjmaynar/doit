@@ -13,12 +13,12 @@ $().ready(function() {
        $('#add-task').toggle();
        $.post('ajax.php', $(this).serialize(), function(data) {
            var task = JSON.parse(data);
-           $("#tasks > tbody").append("<tr><td class='task-name'>" + task['task'] + "</td><td class='task-due'>" + task['due'] + "</td><td><a class='btn edit-task'>Edit</a> <a class='btn del-task'>Delete</a></td></tr>");
+           $("#tasks > tbody").append("<tr id='task-" + task['id'] + "'><td class='task-name'>" + task['task'] + "</td><td class='task-due'>" + task['due'] + "</td><td><a class='btn edit-task'>Edit</a> <a class='btn del-task'>Delete</a></td></tr>");
        });
        return false;
    });
 
-   $('.edit-task').click(function(e) {
+   $(document).on('click', '.edit-task', function(e) {
         e.preventDefault();
         var row = $(this).parent().parent();
         var taskid = row.attr('id').split('-')[1];
@@ -29,9 +29,7 @@ $().ready(function() {
         task.html('<input type="text" class="task-name" value="' + task.html() + '" />');
 
         var dueElement = $('<input type="text" class="task-due" value="' + due.html() + '" />');
-        dueElement.datepicker({
-            'dateFormat': "yy-mm-dd"
-        });
+        dueElement.datepicker();
         due.html(dueElement);
 
         row.find('.edit-task').toggle();
@@ -56,10 +54,10 @@ $().ready(function() {
         e.preventDefault();
         var row = $(this).parent().parent();
         var taskid = row.attr('id').split('-')[1];
-        var task = $(row).find('.task-name input').attr('value');
-        var due = $(row).find('.task-due input').attr('value');
+        var task = $(row).find('.task-name input').val();
+        var due = $(row).find('.task-due input').val();
         var data = {
-            'action': 'update',
+            'action': 'edit',
             'task': task,
             'due': due,
             'id': taskid
@@ -73,7 +71,7 @@ $().ready(function() {
         });
    });
 
-   $('.del-task').click(function(e) {
+   $(document).on('click', '.del-task', function(e) {
         e.preventDefault();
         var taskid = $(this).parent().parent().attr('id').split('-')[1];
         var data = {
