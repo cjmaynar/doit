@@ -73,6 +73,28 @@ abstract class Model {
         return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function filter(Array $params) {
+        $sql = "SELECT * FROM $this->model WHERE ";
+        foreach ($params as $key => $val) {
+            if ($val == null) {
+                $sql .= "$key IS NULL AND";
+                unset($params[$key]);
+            } else {
+                $sql .= "$key=? AND ";
+            }
+        }
+        $sql = trim($sql, 'AND ');
+
+        try {
+            $sth = $this->db->prepare($sql);
+            $sth->execute(array_values($params));
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function delete($id) {
         $sql = "DELETE FROM $this->model WHERE id=?";
         try {

@@ -1,10 +1,6 @@
 <?php
 require_once 'config.php';
 require_once 'models/Task.class.php';
-
-$Task = new Task($DBH);
-
-$tasks = $Task->get('user', 1);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -72,6 +68,13 @@ $tasks = $Task->get('user', 1);
             <th scope="col">Actions</th>
         </tr>
       <?php
+      $Task = new Task($DBH);
+
+      $params = Array(
+          'user' => 1,
+          'completed' => null
+      );
+      $tasks = $Task->filter($params);
       foreach ($tasks as $task) {
 
         $due = date('m/d/Y', strtotime($task['due']));
