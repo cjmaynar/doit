@@ -6,11 +6,14 @@ $action = $_POST['action'];
 unset($_POST['action']);
 
 $Task = new Task($DBH);
+
+error_log(print_r($_POST, true));
+
+
+$due = explode('/', $_POST['due']);
+$_POST['due'] = $due[2] . '-' . $due[0] . '-' . $due[1];
 switch ($action) {
     case 'create':
-        $due = explode('/', $_POST['due']);
-        $_POST['due'] = $due[2] . '-' . $due[0] . '-' . $due[1];
-
         $Task->create($_POST);
         break;
     case 'delete':

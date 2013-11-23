@@ -73,8 +73,10 @@ $tasks = $Task->get('user', 1);
         </tr>
       <?php
       foreach ($tasks as $task) {
-        echo "<tr id='task-" . $task['id'] . "'><td>" . $task['task'] . "</td><td>" . $task['due'];
-        echo '<td><a class="btn edit-task">Edit</a> <a class="btn del-task">Delete</a></td></tr>';
+
+        $due = date('m/d/Y', strtotime($task['due']));
+        echo "<tr id='task-" . $task['id'] . "'><td class='task-name'>" . $task['task'] . "</td><td class='task-due'>" . $due;
+        echo '<td class="actions"><a class="btn edit-task">Edit</a> <a class="btn del-task">Delete</a></td></tr>';
       }
       ?>
       </table>

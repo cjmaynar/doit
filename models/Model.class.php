@@ -17,17 +17,38 @@ abstract class Model {
         $sql .= '(' . implode(', ', array_keys($attrs)) . ') ';
         $sql .= 'VALUES (' . implode(',', array_fill(0, count($attrs), '?')) . ')';
 
+        error_log($sql);
+        error_log(print_r($attrs, true));
+
         try {
             $sth = $this->db->prepare($sql);
             $sth->execute(array_values($attrs));
         } catch (PDOException $e) {
+            error_log($e->getMessage());
             return false;
         }
         return true;
     }
 
     public function update(Array $attrs) {
-        return true;
+        $id = $attrs['id'];
+        unset($attrs['id']);
+
+        $sql = "UPDATE $this->model SET ";
+        foreach ($attrs as $key => $val) {
+            $sql .= "$key = ? ";
+        }
+
+        $sql .= "WHERE id = ?";
+        $attrs['id'] = $id;
+        try {
+            $sth = $this->db->prepare($sql);
+            $sth->execute(array_values($attrs));
+        } catch (PDOException $e) {
+            error_log($e->getMessage());
+            return false;
+        }
+
     }
 
     public function get($key, $value) {
