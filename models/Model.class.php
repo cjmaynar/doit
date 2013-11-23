@@ -13,6 +13,7 @@ abstract class Model {
     public function create(Array $attrs) {
         $attrs['user'] = 1;
         $attrs['created'] = date("Y-m-d H:i:s");
+        $slashDue = $attrs['due'];
         $due = explode('/', $attrs['due']);
         $attrs['due'] = $due[2] . '-' . $due[0] . '-' . $due[1];
 
@@ -27,7 +28,11 @@ abstract class Model {
             error_log($e->getMessage());
             return false;
         }
-        return true;
+
+        $attrs['id'] = $this->db->lastInsertId();
+        $attrs['due'] = $slashDue;
+
+        return $attrs;
     }
 
     public function update(Array $attrs) {
@@ -52,6 +57,8 @@ abstract class Model {
             error_log($e->getMessage());
             return false;
         }
+
+        return $attrs;
     }
 
     public function get($key, $value) {
@@ -74,7 +81,7 @@ abstract class Model {
         } catch (PDOException $e) {
             return false;
         }
-        return true;
+        return Array();
     }
 }
 ?>

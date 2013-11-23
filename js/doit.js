@@ -13,7 +13,7 @@ $().ready(function() {
        $('#add-task').toggle();
        $.post('ajax.php', $(this).serialize(), function(data) {
            var task = JSON.parse(data);
-           $("#tasks > tbody").append("<tr id='task-" + task['id'] + "'><td class='task-name'>" + task['task'] + "</td><td class='task-due'>" + task['due'] + "</td><td><a class='btn edit-task'>Edit</a> <a class='btn del-task'>Delete</a></td></tr>");
+           $("#tasks > tbody").append("<tr id='task-" + task['id'] + "'><td class='task-name'>" + task['task'] + "</td><td class='task-due'>" + task['due'] + "</td><td class='actions'><a class='btn edit-task'>Edit</a> <a class='btn del-task'>Delete</a></td></tr>");
        });
        return false;
    });

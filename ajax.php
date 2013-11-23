@@ -9,15 +9,15 @@ $Task = new Task($DBH);
 
 switch ($action) {
     case 'create':
-        $Task->create($_POST);
+        $result = $Task->create($_POST);
         break;
     case 'delete':
-        $Task->delete($_POST['id']);
+        $result = $Task->delete($_POST['id']);
         break;
     case 'edit':
-        $Task->update($_POST);
+        $result = $Task->update($_POST);
         break;
 }
 
-echo json_encode($_POST);
+echo json_encode($result);
 ?>
