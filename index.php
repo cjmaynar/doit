@@ -28,7 +28,7 @@ require_once 'header.php';
 if (isset($_SESSION['username'])) {
 ?>
 <h2>My Tasks</h2>
-<p>Do these things first!</p>
+<p>Keep track of what needs to get done! Add, modify and complete your tasks below.</p>
 <table id="tasks" class="table table-bordered">
 <tr>
     <th scope="col">Task</th>

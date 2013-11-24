@@ -1,12 +1,20 @@
 <?php
+/**
+ * Handle all AJAX requests for creating, deleting,
+ * editing, and completing tasks
+ */
 require_once 'config.php';
 require_once 'models/Task.class.php';
+
+if (!array_key_exists('action', $_POST)) {
+    error_log("Direct access to ajax.php");
+    header("Location: ./");
+}
 
 $action = $_POST['action'];
 unset($_POST['action']);
 
 $Task = new Task($DBH);
-
 switch ($action) {
     case 'create':
         $_POST['user'] = $_SESSION['userid'];
