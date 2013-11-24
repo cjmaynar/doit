@@ -70,6 +70,12 @@ $().ready(function() {
         var taskid = row.attr('id').split('-')[1];
         var task = row.find('.task-name input').val();
         var due = row.find('.task-due input').val();
+
+        if (task == '') {
+            alert("There must be a task");
+            return false;
+        }
+
         var data = {
             'action': 'edit',
             'task': task,

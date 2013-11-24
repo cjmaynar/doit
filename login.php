@@ -1,14 +1,14 @@
 <h1>DoIt</h1>
 <p>A simple To Do list &mdash; Now you Too Can Do Things.</p>
 
-<?php
-if (isset($errorMsg)) {
-    echo "<p class='alert alert-error'><strong>Error: $errorMsg</strong></p>";
-}
-?>
 <form action="" method="post" role="form">
 <fieldset>
-    <legend>Login to see your tasks</legend>
+    <legend>Login to start doing things</legend>
+    <?php
+    if (isset($errorMsg)) {
+        echo "<p class='alert alert-error'><strong>Error: $errorMsg</strong></p>";
+    }
+    ?>
     <div class="form-group">
     <label for="user">Username:</label>
     <input type="text" name="username" id="user" placeholder="Username" />

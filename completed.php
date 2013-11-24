@@ -12,7 +12,7 @@ require_once 'header.php';
 <?php
 foreach ($Task->completed($_SESSION['userid']) as $task) {
     echo "<li>" . $task['task'] . "
-    <p>Finished: " . date("m/d/y \a\\t g:i a", $task['completed']) . "</p></li>";
+    <p>Finished: " . date("m/d/y g:i a", strtotime($task['completed'])) . "</p></li>";
 }
 echo "</ul>";
 
