@@ -9,6 +9,7 @@ $().ready(function() {
         $('#add-task').toggle();
    });
 
+   //Hide the add form, and show the Add Task button
    $('#cancel-create').click(function(e) {
        e.preventDefault();
        $('#add-form').toggle();
@@ -45,6 +46,8 @@ $().ready(function() {
 
         task.html('<input type="text" class="task-name" value="' + task.html() + '" />');
 
+        //create the dueElement as a jQuery object to allow
+        //datepicker to be attached to it
         var dueElement = $('<input type="text" class="task-due" value="' + due.html() + '" />');
         dueElement.datepicker();
         due.html(dueElement);

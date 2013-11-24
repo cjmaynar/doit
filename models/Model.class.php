@@ -118,7 +118,7 @@ abstract class Model {
         $sql = "SELECT * FROM $this->model WHERE ";
         foreach ($params as $key => $val) {
             if ($val == null) {
-                $sql .= "$key IS NULL AND";
+                $sql .= "$key IS NULL AND ";
                 unset($params[$key]);
             } else {
                 $sql .= "$key=? AND ";
