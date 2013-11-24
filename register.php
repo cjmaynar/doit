@@ -1,7 +1,4 @@
 <?php
-$title = "Register for DoIt";
-
-require_once 'header.php';
 require_once 'models/User.class.php';
 
 $username = ''; //Empty to prevent need for isset check
@@ -34,6 +31,9 @@ if (array_key_exists('username', $_POST)) {
         }
     }
 }
+
+$title = "Register for DoIt";
+require_once 'header.php';
 ?>
 <h2>Register New Account</h2>
 <p>You must create a user account on DoIt before you can begin creating tasks.</p>
