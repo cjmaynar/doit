@@ -31,11 +31,14 @@ class Task extends Model
      */
     public function update(Array $attrs) {
         if (array_key_exists('due', $attrs)) {
+            $slashDue = $attrs['due'];
             $due = explode('/', $attrs['due']);
             $attrs['due'] = $due[2] . '-' . $due[0] . '-' . $due[1];
         }
+        $attrs = parent::update($attrs);
+        $attrs['due'] = $slashDue;
 
-        return parent::update($attrs);
+        return $attrs;
     }
 
     /**

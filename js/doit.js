@@ -91,8 +91,9 @@ $().ready(function() {
             'id': taskid
         }
         $.post('ajax.php', data, function(data) {
-            row.find('.task-name').html(task);
-            row.find('.task-due').html(due);
+            data = JSON.parse(data);
+            row.find('.task-name').html(data.task);
+            row.find('.task-due').html(data.due);
             row.find('.cancel-edit').remove();
             row.find('.save-task').remove();
             row.find('.edit-task').toggle();

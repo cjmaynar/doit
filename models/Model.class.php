@@ -26,6 +26,10 @@ abstract class Model {
      * A key value array of the saved item, plus the unique id
      */
     public function create(Array $attrs) {
+        foreach ($attrs as $key => $value) {
+            $attrs[$key] = strip_tags($value);
+        }
+
         $sql = "INSERT INTO $this->model ";
         $sql .= '(' . implode(', ', array_keys($attrs)) . ') ';
         $sql .= 'VALUES (' . implode(',', array_fill(0, count($attrs), '?')) . ')';
@@ -56,6 +60,10 @@ abstract class Model {
     public function update(Array $attrs) {
         if (!array_key_exists('id', $attrs)) {
             throw new Exception("attrs must contain an id key");
+        }
+
+        foreach ($attrs as $key => $value) {
+            $attrs[$key] = strip_tags($value);
         }
 
         $id = $attrs['id'];
