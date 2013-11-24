@@ -39,7 +39,6 @@ abstract class Model {
         }
 
         $attrs['id'] = $this->db->lastInsertId();
-
         return $attrs;
     }
 
@@ -61,11 +60,6 @@ abstract class Model {
 
         $id = $attrs['id'];
         unset($attrs['id']);
-
-        if (array_key_exists('due', $attrs)) {
-            $due = explode('/', $attrs['due']);
-            $attrs['due'] = $due[2] . '-' . $due[0] . '-' . $due[1];
-        }
 
         $sql = "UPDATE $this->model SET ";
         foreach ($attrs as $key => $val) {

@@ -3,7 +3,7 @@
 
 <form action="" method="post" role="form">
 <fieldset>
-    <legend>Login to start doing things</legend>
+    <legend>Login and start doing things</legend>
     <?php
     if (isset($errorMsg)) {
         echo "<p class='alert alert-error'><strong>Error: $errorMsg</strong></p>";

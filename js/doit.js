@@ -5,8 +5,14 @@ $().ready(function() {
    //Show the form to create a new task
    $('#add-task').click(function(e) {
         e.preventDefault();
-        $('#add-form').show();
+        $('#add-form').toggle();
         $('#add-task').toggle();
+   });
+
+   $('#cancel-create').click(function(e) {
+       e.preventDefault();
+       $('#add-form').toggle();
+       $('#add-task').toggle();
    });
 
    //Perform an AJAX call to add the task to the DB, then
@@ -23,7 +29,9 @@ $().ready(function() {
        $('#add-task').toggle();
        $.post('ajax.php', $(this).serialize(), function(data) {
            var task = JSON.parse(data);
-           $("#tasks > tbody").append("<tr id='task-" + task['id'] + "'><td class='task-name'>" + task['task'] + "</td><td class='task-due'>" + task['due'] + "</td><td class='actions'><a class='btn complete-task'>Complete</a> <a class='btn edit-task'>Edit</a> <a class='btn del-task'>Delete</a></td></tr>");
+           $("#tasks > tbody").append("<tr id='task-" + task['id'] + "'><td class='task-name'>" + task['task'] + "</td><td class='task-due'>" + task['due'] + "</td><td class='actions'><a class='btn btn-success complete-task'>Complete</a> <a class='btn edit-task'>Edit</a> <a class='btn btn-danger del-task'>Delete</a></td></tr>");
+           $("#task").val('');
+           $("#due").val('');
        });
        return false;
    });
@@ -43,8 +51,8 @@ $().ready(function() {
 
         row.find('.edit-task').toggle();
         row.find('.complete-task').toggle();
-        row.find('.actions').prepend('<a class="btn save-task">Save</a>');
-        row.find('.actions').append(' <a class="btn cancel-edit">Cancel</a>');
+        row.find('.actions').prepend(' <a class="btn cancel-edit">Cancel</a>');
+        row.find('.actions').prepend('<a class="btn btn-primary save-task">Save</a>');
    });
 
    //On cancel click restore the row to the original

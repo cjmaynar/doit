@@ -29,6 +29,7 @@ if (isset($_SESSION['username'])) {
 ?>
 <h2>My Tasks</h2>
 <p>Keep track of what needs to get done! Add, modify and complete your tasks below.</p>
+<p><span class="alert alert-error">Red</span> tasks are past due.</p>
 <table id="tasks" class="table table-bordered">
 <tr>
     <th scope="col">Task</th>
@@ -49,7 +50,7 @@ foreach ($Task->filter($params) as $task) {
         echo "class='alert alert-error' ";
     }
     echo "id='task-" . $task['id'] . "'><td class='task-name'>" . $task['task'] . "</td><td class='task-due'>" . $due;
-    echo '<td class="actions"><a class="btn complete-task">Complete</a> <a class="btn edit-task">Edit</a> <a class="btn del-task">Delete</a></td></tr>';
+    echo '<td class="actions"><a class="btn btn-success complete-task">Complete</a> <a class="btn edit-task">Edit</a> <a class="btn btn-danger del-task">Delete</a></td></tr>';
 }
 ?>
 </table>
@@ -66,12 +67,12 @@ foreach ($Task->filter($params) as $task) {
         <label for="due">When does this need to be finished?</label>
         <input type="text" id="due" name="due" />
 
-        <p><input type="hidden" name="action" value="create" /><input type="submit" class="btn" value="Create" /></p>
+        <p><input type="hidden" name="action" value="create" /><input type="submit" class="btn btn-success" value="Create" /> <a href="" id="cancel-create" class="btn">Cancel</a></p>
     </fieldset>
   </form>
 </div>
 
-<p><a id="add-task" class="btn">Add Task</a></p>
+<p><a id="add-task" class="btn btn-primary">Add Task</a></p>
 <?php
 } else {
   require_once 'login.php';
