@@ -3,7 +3,7 @@
 
 <?php
 if (isset($errorMsg)) {
-    echo "<p><strong>Error: $errorMsg</strong></p>";
+    echo "<p class='alert alert-error'><strong>Error: $errorMsg</strong></p>";
 }
 ?>
 <form action="" method="post" role="form">
@@ -16,7 +16,7 @@ if (isset($errorMsg)) {
 
     <div class="form-group">
     <label for="password">Password:</label>
-    <input type="text" name="password" id="password" placeholder="Password" />
+    <input type="password" name="password" id="password" placeholder="Password" />
     </div>
 
     <p><input type="submit" class="btn btn-primary" value="Login" /></p>

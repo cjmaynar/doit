@@ -36,22 +36,27 @@ if (isset($_SESSION['username'])) {
     <th scope="col">Actions</th>
 </tr>
 <?php
-$Task = new Task($DBH);
-
+$curDate = date('m/d/y');
 $params = Array(
   'user' => $_SESSION['userid'],
   'completed' => null
 );
+$Task = new Task($DBH);
 foreach ($Task->filter($params) as $task) {
     $due = date('m/d/Y', strtotime($task['due']));
-    echo "<tr id='task-" . $task['id'] . "'><td class='task-name'>" . $task['task'] . "</td><td class='task-due'>" . $due;
+    echo "<tr ";
+    if ($due < $curDate) {
+        echo "class='alert alert-error' ";
+    }
+    echo "id='task-" . $task['id'] . "'><td class='task-name'>" . $task['task'] . "</td><td class='task-due'>" . $due;
     echo '<td class="actions"><a class="btn complete-task">Complete</a> <a class="btn edit-task">Edit</a> <a class="btn del-task">Delete</a></td></tr>';
 }
 ?>
 </table>
 
 <div id="add-form">
-<h2>Add Task</h2>
+<h3>Add Task</h3>
+<p>Have some work to do? Write it down here!</p>
 <form id="new-task">
     <fieldset>
         <legend>Make yourself a task</legend>

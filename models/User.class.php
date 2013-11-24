@@ -10,7 +10,7 @@ class User extends Model
      */
     public function create(Array $attrs) {
         if (array_key_exists('username', $attrs) && array_key_exists('password', $attrs)) {
-            parent::create($attrs);
+            return parent::create($attrs);
         } else {
             return false;
         }
