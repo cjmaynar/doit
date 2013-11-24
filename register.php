@@ -1,4 +1,5 @@
 <?php
+require_once 'config.php';
 require_once 'models/User.class.php';
 
 $username = ''; //Empty to prevent need for isset check
