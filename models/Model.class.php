@@ -6,6 +6,12 @@
  */
 abstract class Model {
     /**
+     * Property: model
+     * Stores the name of the concrete class
+     */
+    public $model = '';
+
+    /**
      * Constructor: __construct
      * Takes in the PDO instance and stores it for the Model
      */
@@ -86,19 +92,6 @@ abstract class Model {
         }
 
         return $attrs;
-    }
-
-    public function get($key, $value) {
-        throw new Exception("Deprecated");
-        $sql = "SELECT * FROM $this->model ";
-        $sql .= "WHERE $key=?";
-        try {
-            $sth = $this->db->prepare($sql);
-            $sth->execute(Array($value));
-        } catch (PDOException $e) {
-            return false;
-        }
-        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**
