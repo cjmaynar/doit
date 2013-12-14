@@ -1,4 +1,10 @@
 <?php
+function __autoload($class) {
+    $base = dirname(__FILE__);
+    $class = explode('\\', $class);
+    require $base . "/" . strtolower($class[0]) . "/$class[1].class.php";
+}
+
 session_start();
 
 $host = '';

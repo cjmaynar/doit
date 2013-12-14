@@ -1,4 +1,7 @@
 <?php
+namespace Models;
+use \PDO, \PDOException;
+
 /**
  * Abstract: Model
  * A base class that all models will inherit.
@@ -17,7 +20,8 @@ abstract class Model {
      */
     public function __construct(PDO $DBH) {
         $this->db = $DBH;
-        $this->model = strtolower(get_class($this)) . 's';
+        $classname = strtolower(get_class($this)) . 's';
+        $this->model = explode('\\', $classname)[1];
     }
 
     /**

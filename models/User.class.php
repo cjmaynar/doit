@@ -1,5 +1,5 @@
 <?php
-require_once 'Model.class.php';
+namespace Models;
 
 class User extends Model
 {

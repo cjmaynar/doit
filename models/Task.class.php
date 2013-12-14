@@ -1,5 +1,6 @@
 <?php
-require_once 'Model.class.php';
+namespace Models;
+use PDO, PDOException;
 
 /**
  * Class: Task

@@ -4,7 +4,6 @@
  * editing, and completing tasks
  */
 require_once 'config.php';
-require_once 'models/Task.class.php';
 
 if (!array_key_exists('action', $_POST)) {
     error_log("Direct access to ajax.php");
@@ -14,7 +13,7 @@ if (!array_key_exists('action', $_POST)) {
 $action = $_POST['action'];
 unset($_POST['action']);
 
-$Task = new Task($DBH);
+$Task = new Models\Task($DBH);
 switch ($action) {
     case 'create':
         $_POST['user'] = $_SESSION['userid'];

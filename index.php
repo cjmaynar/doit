@@ -1,13 +1,12 @@
 <?php
 require_once 'config.php';
-require_once 'models/Task.class.php';
-require_once 'models/User.class.php';
+require_once 'header.php';
 
 if (isset($_POST) && array_key_exists('username', $_POST)) {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $User = new User($DBH);
+    $User = new Models\User($DBH);
     $params = Array(
         'username' => $username,
         'password' => hash('sha256', $password)
@@ -22,8 +21,6 @@ if (isset($_POST) && array_key_exists('username', $_POST)) {
         $errorMsg = "Incorrect username/password combination.";
     }
 }
-
-require_once 'header.php';
 
 if (isset($_SESSION['username'])) {
 ?>
@@ -42,7 +39,7 @@ $params = Array(
   'user' => $_SESSION['userid'],
   'completed' => null
 );
-$Task = new Task($DBH);
+$Task = new Models\Task($DBH);
 foreach ($Task->filter($params) as $task) {
     $due = date('m/d/Y', strtotime($task['due']));
     echo "<tr ";

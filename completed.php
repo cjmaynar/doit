@@ -1,15 +1,12 @@
 <?php
 $title = "Completed Tasks";
 require_once 'config.php';
-require_once 'models/Task.class.php';
-
-$Task = new Task($DBH);
-
 require_once 'header.php';
 ?>
 <h2>My Completed Tasks</h2>
 <p>A listing of all the things that you&rsquo;ve acomplished. Well Done.</p>
 <?php
+$Task = new Models\Task($DBH);
 $tasks = $Task->completed($_SESSION['userid']);
 if (count($tasks) > 0) {
     echo "<ul>";
