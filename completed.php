@@ -1,6 +1,5 @@
 <?php
 $title = "Completed Tasks";
-require_once 'config.php';
 require_once 'header.php';
 ?>
 <h2>My Completed Tasks</h2>
@@ -18,6 +17,5 @@ if (count($tasks) > 0) {
 } else {
     echo "<p>You haven&rsquo;t completed anything yet! Go <a href='./'>Make some tasks!</a></p>";
 }
-
 require_once 'footer.php';
 ?>

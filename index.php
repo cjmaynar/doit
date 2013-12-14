@@ -1,5 +1,4 @@
 <?php
-require_once 'config.php';
 require_once 'header.php';
 
 if (isset($_POST) && array_key_exists('username', $_POST)) {
