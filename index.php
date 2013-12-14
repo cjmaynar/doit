@@ -34,16 +34,18 @@ if (isset($_SESSION['username'])) {
     );
     $Tasks = $Task->filter($params);
 
+    $template = 'index';
     $context = Array(
         'tasks' => $Tasks,
         'title' => 'DoIt',
         'userid' => $_SESSION['userid']
     );
 } else {
+    $template = 'login';
     $context = Array(
         'error' => $errorMsg,
         'title' => 'Login'
     );
 }
-echo $Mustache_Engine->render('login', $context);
+echo $Mustache_Engine->render($template, $context);
 ?>
