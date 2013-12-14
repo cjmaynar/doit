@@ -1,5 +1,10 @@
 <?php
-require_once 'header.php';
+require_once 'config.php';
+
+//Add the date formater to the filters
+$Mustache_Engine->addHelper('date', [
+    'format' => function($value) { return date('m/d/Y', strtotime($value)); },
+]);
 
 if (isset($_POST) && array_key_exists('username', $_POST)) {
     $username = $_POST['username'];
@@ -22,56 +27,23 @@ if (isset($_POST) && array_key_exists('username', $_POST)) {
 }
 
 if (isset($_SESSION['username'])) {
-?>
-<h2>My Tasks</h2>
-<p>Keep track of what needs to get done! Add, modify and complete your tasks below.</p>
-<p><span class="alert alert-error">Red</span> tasks are past due.</p>
-<table id="tasks" class="table table-bordered">
-<tr>
-    <th scope="col">Task</th>
-    <th scope="col">Due</th>
-    <th scope="col">Actions</th>
-</tr>
-<?php
-$curDate = date('m/d/y');
-$params = Array(
-  'user' => $_SESSION['userid'],
-  'completed' => null
-);
-$Task = new Models\Task($DBH);
-foreach ($Task->filter($params) as $task) {
-    $due = date('m/d/Y', strtotime($task['due']));
-    echo "<tr ";
-    if ($due < $curDate) {
-        echo "class='alert alert-error' ";
-    }
-    echo "id='task-" . $task['id'] . "'><td class='task-name'>" . $task['task'] . "</td><td class='task-due'>" . $due;
-    echo '<td class="actions"><a class="btn btn-success complete-task">Complete</a> <a class="btn edit-task">Edit</a> <a class="btn btn-danger del-task">Delete</a></td></tr>';
-}
-?>
-</table>
+    $Task = new Models\Task($DBH);
+    $params = Array(
+      'user' => $_SESSION['userid'],
+      'completed' => null
+    );
+    $Tasks = $Task->filter($params);
 
-<div id="add-form">
-<h3>Add Task</h3>
-<p>Have some work to do? Write it down here!</p>
-<form id="new-task">
-    <fieldset>
-        <legend>Make yourself a task</legend>
-        <label for="task">What needs to get done?</label>
-        <input type="text" id="task" name="task" />
-
-        <label for="due">When does this need to be finished?</label>
-        <input type="text" id="due" name="due" />
-
-        <p><input type="hidden" name="action" value="create" /><input type="submit" class="btn btn-success" value="Create" /> <a href="" id="cancel-create" class="btn">Cancel</a></p>
-    </fieldset>
-  </form>
-</div>
-
-<p><a id="add-task" class="btn btn-primary">Add Task</a></p>
-<?php
+    $context = Array(
+        'tasks' => $Tasks,
+        'title' => 'DoIt',
+        'userid' => $_SESSION['userid']
+    );
 } else {
-  require_once 'login.php';
+    $context = Array(
+        'error' => $errorMsg,
+        'title' => 'Login'
+    );
 }
-require_once 'footer.php';
+echo $Mustache_Engine->render('login', $context);
 ?>

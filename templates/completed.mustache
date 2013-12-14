@@ -1,0 +1,8 @@
+{{> base_header }}
+<h2>My Completed Tasks</h2>
+<p>A listing of all the things that you&rsquo;ve acomplished. Well Done.</p>
+<ul>
+{{# tasks }}
+    <li>{{ task }}</li>
+{{/ tasks }}
+{{> base_footer }}

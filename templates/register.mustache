@@ -1,0 +1,32 @@
+{{> base_header }}
+<h2>Register New Account</h2>
+<p>You must create a user account on DoIt before you can begin creating tasks.</p>
+
+{{#error}}
+<p class='alert alert-error'><strong>Error: {{error}}</strong></p>
+{{/error}}
+
+<form action="" method="post">
+<fieldset>
+    <legend>Create an account to begin tracking your tasks</legend>
+
+    <div class="form-group">
+    <label for="user">Username:</label>
+    <input type="text" name="username" id="user" value="{{ username }}" placeholder="Username" />
+    </div>
+
+    <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" name="password" id="password" placeholder="Password" />
+    </div>
+
+    <div class="form-group">
+    <label for="password2">Confirm Password:</label>
+    <input type="password" name="password2" id="password2" placeholder="Once again" />
+    </div>
+
+    <p><input type="submit" class="btn btn-primary" value="Register" /></p>
+    <p>Already have an account? <a href="./">Login</a>.</p>
+</fieldset>
+</form>
+{{> base_footer }}

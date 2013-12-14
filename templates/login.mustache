@@ -1,14 +1,13 @@
+{{> base_header }}
 <h1>DoIt</h1>
 <p>A simple To Do list &mdash; Now you Too Can Do Things.</p>
 
 <form action="" method="post" role="form">
 <fieldset>
     <legend>Login and start doing things</legend>
-    <?php
-    if (isset($errorMsg)) {
-        echo "<p class='alert alert-error'><strong>Error: $errorMsg</strong></p>";
-    }
-    ?>
+    {{#error}}
+    <p class='alert alert-error'><strong>Error: {{error}}</strong></p>
+    {{/error}}
     <div class="form-group">
     <label for="user">Username:</label>
     <input type="text" name="username" id="user" placeholder="Username" />
@@ -23,3 +22,4 @@
     <p>Don&rsquo;t have an account? <a href="register.php">Register a new account</a>.</p>
 </fieldset>
 </form>
+{{> base_footer }}
