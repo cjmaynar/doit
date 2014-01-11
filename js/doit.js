@@ -21,7 +21,7 @@ $().ready(function() {
    $('#new-task').submit(function(e) {
        e.preventDefault();
 
-       if ($("#task").val() == '' || $("#due").val() == '') {
+       if ($("#task").val() === '' || $("#due").val() === '') {
            alert("You must fill in the form to create a task");
            return false;
        }
@@ -30,7 +30,7 @@ $().ready(function() {
        $('#add-task').toggle();
        $.post('ajax.php', $(this).serialize(), function(data) {
            var task = JSON.parse(data);
-           $("#tasks > tbody").append("<tr id='task-" + task['id'] + "'><td class='task-name'>" + task['task'] + "</td><td class='task-due'>" + task['due'] + "</td><td class='actions'><a class='btn btn-success complete-task'>Complete</a> <a class='btn edit-task'>Edit</a> <a class='btn btn-danger del-task'>Delete</a></td></tr>");
+           $("#tasks > tbody").append("<tr id='task-" + task.id + "'><td class='task-name'>" + task.task + "</td><td class='task-due'>" + task.due + "</td><td class='actions'><a class='btn btn-success complete-task'>Complete</a> <a class='btn edit-task'>Edit</a> <a class='btn btn-danger del-task'>Delete</a></td></tr>");
            $("#task").val('');
            $("#due").val('');
        });
@@ -82,7 +82,7 @@ $().ready(function() {
         var task = row.find('.task-name input').val();
         var due = row.find('.task-due input').val();
 
-        if (task == '') {
+        if (task === '') {
             alert("There must be a task");
             return false;
         }
@@ -92,7 +92,7 @@ $().ready(function() {
             'task': task,
             'due': due,
             'id': taskid
-        }
+        };
         $.post('ajax.php', data, function(data) {
             data = JSON.parse(data);
             row.find('.task-name').html(data.task);
@@ -112,7 +112,7 @@ $().ready(function() {
         var data = {
             'action': 'delete',
             'id': taskid
-        }
+        };
         $.post('ajax.php', data, function(data) {
             $('#task-' + taskid).hide();
             $('#task-' + taskid).remove();
@@ -127,7 +127,7 @@ $().ready(function() {
        var data = {
            'action': 'complete',
            'id': taskid
-       }
+       };
        $.post('ajax.php', data, function(data) {
            $('#task-' + taskid).hide();
            $('#task-' + taskid).remove();
